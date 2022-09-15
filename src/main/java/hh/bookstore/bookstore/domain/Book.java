@@ -13,13 +13,13 @@ public class Book {
 	private String title;
 	private String author;
 	private int releaseyear;
-	private int isbn;
+	private String isbn;
 	private int price;
 	
 	public Book() {
 	}
 	
-	public Book(String title, String author, int releaseyear, int isbn, int price) {
+	public Book(String title, String author, int releaseyear, String isbn, int price) {
 		super();
 		this.title = title;
 		this.author = author;
@@ -52,11 +52,11 @@ public class Book {
 		this.author = author;
 	}
 	
-	//isbn
-	public int getIsbn() {
+	//ISBN
+	public String getIsbn() {
 		return isbn;
 	}
-	public void setIsbn(int isbn) {
+	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
 	
@@ -74,6 +74,11 @@ public class Book {
 	}
 	public void setReleaseyear(int releaseyear) {
 		this.releaseyear = releaseyear;
+	}
+	
+	@Override
+	public String toString(){
+	      return "title: "+this.title+", author: "+ this.author + ", id: " + this.id;
 	}
 
 }
