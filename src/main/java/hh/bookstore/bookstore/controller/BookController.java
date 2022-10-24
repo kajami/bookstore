@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -56,6 +57,7 @@ public class BookController {
 	    	return repository.save(book);
 	    }
 
+	    @PreAuthorize("hasAuthority('ADMIN')")
 		@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
 	    public String deleteBook(@PathVariable("id") Long bookId, Model model) {
 			repository.deleteById(bookId);
@@ -63,6 +65,7 @@ public class BookController {
 		}
 		
 		//Update book
+	    @PreAuthorize("hasAuthority('ADMIN')")
 		@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
 	    public String updateBook(@PathVariable("id") long bookId, Model model) {
 			model.addAttribute("book", repository.findById(bookId));

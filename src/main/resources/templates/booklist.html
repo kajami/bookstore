@@ -1,34 +1,46 @@
 <!DOCTYPE HTML>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head> 
     <title>Books</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
 </head>
 <body>
-	<h1>Books</h1>
-	<table class="table table-striped">
-		<tbody>
-			<tr>
-			    <th>Author</th>
-			    <th>Title</th>
-			    <th>ISBN</th>
-			    <th>Year</th>
-			    <th>Price</th>
-			    <th>Category</th>
-		  	</tr>
-			<tr th:each = "book : ${books}">
-				<td th:text="${book.author}"></td>
-				<td th:text="${book.title}"></td>
-				<td th:text="${book.isbn}"></td>
-				<td th:text="${book.releaseyear}"></td>
-				<td th:text="${book.price}"></td>
-				<td th:text="${book.category.name}"></td>
-				<td><a class="btn btn-danger" th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
-				<td><a class="btn btn-primary" th:href="@{/update/{id}(id=${book.id})}">Update</a></td>
-			</tr>		
-		</tbody>
-	</table>
-	<a class="btn btn-success" href="/add">Add new book</a>
+	<div class="col-md-4">
+		<h1>Books</h1>
+	</div>	
+	<div class="col-md-4">
+		<h3>Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+	</div>
+	<div style="margin-left:10px">
+		<table class="table table-striped">
+			<tbody>
+				<tr>
+				    <th>Author</th>
+				    <th>Title</th>
+				    <th>ISBN</th>
+				    <th>Year</th>
+				    <th>Price</th>
+				    <th>Category</th>
+			  	</tr>
+				<tr th:each = "book : ${books}">
+					<td th:text="${book.author}"></td>
+					<td th:text="${book.title}"></td>
+					<td th:text="${book.isbn}"></td>
+					<td th:text="${book.releaseyear}"></td>
+					<td th:text="${book.price}"></td>
+					<td th:text="${book.category.name}"></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-danger" th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a class="btn btn-primary" th:href="@{/update/{id}(id=${book.id})}">Update</a></td>
+				</tr>		
+			</tbody>
+		</table>
+		<a class="btn btn-success" href="/add">Add new book</a>
+		<div class="col-md-4" style="padding:20px 0">
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
